@@ -6,7 +6,7 @@
 ## This first function creates the matrix object that can cache its inverse
 
 makeCacheMatrix <- function(x = matrix()) {
-  m <- NULL      ## Create a variable with a value of null; this will be replaced later
+  m <- NULL      ## Create the inverse matrix, set to NULL
   ## Create the set function, which sets the value of the matrix with the argument entered in y
   set <- function(y) {
     ## Use the <<- operator to set the value of x outside of the current environment
@@ -19,7 +19,7 @@ makeCacheMatrix <- function(x = matrix()) {
   ## Create the setmatrix function, which uses the solve function to return the
   ## inverse of the matrix; solve returns the inverse if the b argument is missing.
   setmatrix <- function(solve) m <<- solve
-  ## Create the getmatrix function, which retrieves the value of m
+  ## Create the getmatrix function, which gets the inverse
   getmatrix <- function() m
   ## Create our list of functions and their corresponding names
   list(set=set, get=get, setmatrix=setmatrix, getmatrix=getmatrix)
@@ -38,12 +38,8 @@ cacheSolve <- function(x, ...) {
     return(m)
   }
   ## If we reach this point, it means we need to calculate the inverse
-  ## Create a new variable called the_matrix (there is no spoon) and use the get
-  ## function from makeCacheMatrix
   the_matrix <- x$get()
-  ## Use solve to get the inverse
   m <- solve(the_matrix, ...)
-  ## Use the setmatrix function from makeCacheMatrix
   x$setmatrix(m)
   return(m)
 }
